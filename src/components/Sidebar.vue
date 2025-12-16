@@ -13,7 +13,7 @@
       isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
     ]"
   >
-    <div class="p-6 flex-1 overflow-y-auto">
+    <div class="p-6 flex-1 overflow-y-auto min-h-0">
       <!-- Mobile Close Button & Logo -->
       <div class="flex justify-between items-center mb-8">
         <!-- Logo/Icon -->
