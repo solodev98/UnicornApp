@@ -8,7 +8,7 @@
       <!-- Header -->
       <header class="bg-white shadow-sm sticky top-0 z-40">
         <div class="px-8 py-6 flex justify-between items-center">
-          <h1 class="text-2xl font-bold text-gray-900">Welcome John Doe</h1>
+          <h1 class="font-bold" style="font-size: 32px; color: #4d5959;">Welcome John Doe</h1>
           <button
             @click="showForm = true; editingUnicorn = null"
             class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-md transition-colors flex items-center gap-2"
