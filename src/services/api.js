@@ -4,11 +4,10 @@ import axios from 'axios'
 const fullUrl = import.meta.env.VITE_API_BASE_URL || 'https://crudcrud.com/api/YOUR_UNIQUE_ID_HERE'
 const uniqueId = fullUrl.includes('/api/') ? fullUrl.split('/api/')[1] : 'YOUR_UNIQUE_ID_HERE'
 
-// Use proxy in development to avoid CORS issues, direct URL in production
-// The proxy will forward /api/* requests to https://crudcrud.com/api/*
-const API_BASE_URL = import.meta.env.DEV
-  ? `/api/${uniqueId}`
-  : fullUrl
+// Use proxy in both development and production to avoid CORS issues
+// Vite proxy handles it in dev, Vercel rewrites handle it in production
+// The proxy/rewrite will forward /api/* requests to https://crudcrud.com/api/*
+const API_BASE_URL = `/api/${uniqueId}`
 
 const api = axios.create({
   baseURL: API_BASE_URL,
