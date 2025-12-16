@@ -17,7 +17,7 @@
             <MenuIcon :size="24" />
           </button>
           
-          <h1 class="font-bold text-xl sm:text-2xl lg:text-[32px] color: #4d5959 ml-2 lg:ml-0">Welcome John Doe</h1>
+          <h1 class="font-bold text-xl sm:text-2xl lg:text-[32px] ml-2 lg:ml-0" style="color: #4d5959;">Welcome John Doe</h1>
           <button
             @click="showForm = true; editingUnicorn = null"
             class="bg-purple-600 hover:bg-purple-700 text-white px-3 sm:px-6 py-2 rounded-md transition-colors flex items-center gap-2 text-sm sm:text-base"

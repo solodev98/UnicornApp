@@ -1,7 +1,10 @@
 <template>
   <div class="bg-white rounded-lg shadow-sm mb-4 overflow-hidden relative">
     <!-- Colored Left Border - More prominent -->
-    <div :class="['absolute left-0 top-0 bottom-0 w-1.5', borderColorClass]"></div>
+    <div 
+      class="absolute left-0 top-0 bottom-0 w-1.5"
+      :style="{ backgroundColor: borderColor }"
+    ></div>
     
    
     <div class="py-4 sm:py-6 px-3 sm:px-4 pl-5 sm:pl-6">
@@ -38,7 +41,7 @@
             </button>
             <button
               @click="$emit('delete', unicorn)"
-              class="w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded flex items-center justify-center transition-colors"
+              class="w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-[12px] flex items-center justify-center transition-colors"
               title="Delete"
             >
               <DeleteIcon :size="16" />
@@ -159,8 +162,12 @@ const showDetails = ref(false)
 const status = computed(() => getUnicornStatus(props.unicorn.age))
 const statusColor = computed(() => getStatusColor(status.value))
 const statusEmoji = computed(() => getStatusEmoji(status.value))
-const borderColorClass = computed(() => {
-  const colors = ['bg-red-500', 'bg-green-500', 'bg-blue-500']
+const borderColor = computed(() => {
+  const colors = [
+    '#D90368', // Red
+    '#73D2DE', // Blue
+    '#77B28C'  // Green
+  ]
   return colors[props.index % colors.length]
 })
 

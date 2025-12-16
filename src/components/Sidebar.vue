@@ -13,7 +13,7 @@
       isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
     ]"
   >
-    <div class="p-6 flex-1 overflow-y-auto min-h-0">
+    <div class="p-6 flex-1 overflow-y-auto min-h-0 pb-20">
    
       <div class="flex justify-between items-center mb-8">
        <div>
@@ -107,7 +107,7 @@
       </div>
     </div>
 
-    <div class="p-6 border-t border-gray-200">
+    <div class="p-6 border-t border-gray-200 flex-shrink-0 mt-auto">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm" style="background-color: #E9D5FF; color: #9333EA;">
           DN

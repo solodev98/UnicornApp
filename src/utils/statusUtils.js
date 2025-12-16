@@ -12,7 +12,7 @@ export function getUnicornStatus(age) {
 
 export function getStatusColor(status) {
   const colorMap = {
-    'Baby Unicorn': 'bg-yellow-100 text-yellow-700', // Light yellow with dark yellow/orange text
+    'Baby Unicorn': 'bg-yellow-100 text-yellow-700',
     'Mature Unicorn': 'bg-green-100 text-green-800',
     'Old Unicorn': 'bg-purple-100 text-purple-800'
   }

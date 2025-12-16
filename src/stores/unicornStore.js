@@ -3,16 +3,13 @@ import { ref, computed } from 'vue'
 import * as api from '../services/api'
 
 export const useUnicornStore = defineStore('unicorn', () => {
-  // State
   const unicorns = ref([])
   const loading = ref(false)
   const error = ref(null)
   const currentPage = ref(1)
   const itemsPerPage = ref(5)
   const sortField = ref(null) 
-  const sortOrder = ref('asc') 
-
-  // Computed
+  const sortOrder = ref('asc')
   const sortedUnicorns = computed(() => {
     let sorted = [...unicorns.value]
     
@@ -51,7 +48,6 @@ export const useUnicornStore = defineStore('unicorn', () => {
     return Math.ceil(sortedUnicorns.value.length / itemsPerPage.value)
   })
 
-  // Actions
   async function fetchUnicorns() {
     loading.value = true
     error.value = null
@@ -122,11 +118,9 @@ export const useUnicornStore = defineStore('unicorn', () => {
 
   function setSort(field) {
     if (field === null) {
-      // Clear sort
       sortField.value = null
       sortOrder.value = 'asc'
     } else if (sortField.value === field) {
-      // Toggle sort order if same field
       sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc'
     } else {
       sortField.value = field
