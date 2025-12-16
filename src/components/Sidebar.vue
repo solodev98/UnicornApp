@@ -1,6 +1,6 @@
 <template>
-  <aside class="hidden lg:block w-64 bg-white border-r border-gray-200 min-h-screen fixed left-0 top-0 overflow-y-auto">
-    <div class="p-6">
+  <aside class="hidden lg:block w-64 bg-white border-r border-gray-200 h-screen fixed left-0 top-0 flex flex-col">
+    <div class="p-6 flex-1 overflow-y-auto">
       <!-- Logo/Icon -->
       <div class="mb-8">
         <svg width="40" height="16" viewBox="0 0 40 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -60,6 +60,9 @@
         </a>
       </nav>
 
+      <!-- Separator -->
+      <div class="my-6 border-t border-gray-200"></div>
+
       <!-- Your Teams Section -->
       <div class="mt-8">
         <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 mb-3">Your teams</h3>
@@ -74,6 +77,9 @@
           </a>
         </div>
       </div>
+
+      <!-- Separator -->
+      <div class="my-6 border-t border-gray-200"></div>
 
       <!-- Reports Section -->
       <div class="mt-8">
@@ -93,6 +99,15 @@
             </svg>
             <span>Year to Date</span>
           </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="p-6 border-t border-gray-200">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm" style="background-color: #E9D5FF; color: #9333EA;">
+          DN
         </div>
       </div>
     </div>

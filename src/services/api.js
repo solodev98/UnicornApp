@@ -77,9 +77,24 @@ export async function createUnicorn(unicorn) {
 export async function updateUnicorn(id, unicorn) {
   try {
     const response = await api.put(`/unicorns/${id}`, unicorn)
-    const data = typeof response.data === 'string' ? JSON.parse(response.data) : response.data
-    return { data: data, error: null }
+    
+    // Handle empty responses (common for PUT requests that return 200/204)
+    if (!response.data || response.data === '') {
+      return { data: { ...unicorn, _id: id }, error: null }
+    }
+    
+    // Parse response if it's a string, otherwise use as-is
+    const data = typeof response.data === 'string' 
+      ? (response.data.trim() ? JSON.parse(response.data) : null)
+      : response.data
+    
+    return { data: data || { ...unicorn, _id: id }, error: null }
   } catch (error) {
+    // If it's a JSON parse error but status is 2xx, the update likely succeeded
+    if (error.message.includes('JSON') && error.response?.status >= 200 && error.response?.status < 300) {
+      return { data: { ...unicorn, _id: id }, error: null }
+    }
+    
     const errorMessage = error.response?.data?.message || error.message || 'Failed to update unicorn'
     return { data: null, error: errorMessage }
   }

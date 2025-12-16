@@ -25,7 +25,8 @@
           v-model="formData.name"
           type="text"
           required
-          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          @blur="validateField('name')"
+          :class="['w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent', errors.name ? 'border-red-500' : 'border-gray-300']"
           placeholder="Enter unicorn name"
         />
         <p v-if="errors.name" class="mt-1 text-sm text-red-600">{{ errors.name }}</p>
@@ -40,8 +41,10 @@
           v-model.number="formData.age"
           type="number"
           min="0"
+          max="150"
           required
-          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          @blur="validateField('age')"
+          :class="['w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent', errors.age ? 'border-red-500' : 'border-gray-300']"
           placeholder="Enter age"
         />
         <p v-if="errors.age" class="mt-1 text-sm text-red-600">{{ errors.age }}</p>
@@ -55,9 +58,11 @@
           id="colour"
           v-model="formData.colour"
           type="text"
-          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          @blur="validateField('colour')"
+          :class="['w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent', errors.colour ? 'border-red-500' : 'border-gray-300']"
           placeholder="Enter colour"
         />
+        <p v-if="errors.colour" class="mt-1 text-sm text-red-600">{{ errors.colour }}</p>
       </div>
 
       <div class="flex gap-4 pt-4">
@@ -106,7 +111,8 @@ const formData = reactive({
 
 const errors = reactive({
   name: '',
-  age: ''
+  age: '',
+  colour: ''
 })
 
 // Populate form when editing
@@ -124,23 +130,107 @@ watch(() => props.unicorn, (newUnicorn) => {
   // Clear errors
   errors.name = ''
   errors.age = ''
+  errors.colour = ''
 }, { immediate: true })
 
 function validateForm() {
   errors.name = ''
   errors.age = ''
+  errors.colour = ''
   
+  let isValid = true
+  
+  // Name validation
   if (!formData.name || formData.name.trim() === '') {
     errors.name = 'Name is required'
-    return false
+    isValid = false
+  } else {
+    const trimmedName = formData.name.trim()
+    if (trimmedName.length < 2) {
+      errors.name = 'Name must be at least 2 characters long'
+      isValid = false
+    } else if (trimmedName.length > 50) {
+      errors.name = 'Name must not exceed 50 characters'
+      isValid = false
+    }
   }
   
-  if (formData.age === null || formData.age === undefined || formData.age < 0) {
-    errors.age = 'Age must be a positive number'
-    return false
+  // Age validation
+  if (formData.age === null || formData.age === undefined) {
+    errors.age = 'Age is required'
+    isValid = false
+  } else {
+    const age = Number(formData.age)
+    if (isNaN(age)) {
+      errors.age = 'Age must be a valid number'
+      isValid = false
+    } else if (age < 0) {
+      errors.age = 'Age must be a positive number'
+      isValid = false
+    } else if (age < 1) {
+      errors.age = 'Age must be at least 1'
+      isValid = false
+    } else if (age > 150) {
+      errors.age = 'Age must not exceed 150'
+      isValid = false
+    } else if (!Number.isInteger(age)) {
+      errors.age = 'Age must be a whole number'
+      isValid = false
+    }
   }
   
-  return true
+  // Colour validation (optional field, but validate length if provided)
+  if (formData.colour && formData.colour.trim().length > 30) {
+    errors.colour = 'Colour must not exceed 30 characters'
+    isValid = false
+  }
+  
+  return isValid
+}
+
+function validateField(fieldName) {
+  // Clear the error for this field first
+  errors[fieldName] = ''
+  
+  switch (fieldName) {
+    case 'name':
+      if (!formData.name || formData.name.trim() === '') {
+        errors.name = 'Name is required'
+      } else {
+        const trimmedName = formData.name.trim()
+        if (trimmedName.length < 2) {
+          errors.name = 'Name must be at least 2 characters long'
+        } else if (trimmedName.length > 50) {
+          errors.name = 'Name must not exceed 50 characters'
+        }
+      }
+      break
+      
+    case 'age':
+      if (formData.age === null || formData.age === undefined) {
+        errors.age = 'Age is required'
+      } else {
+        const age = Number(formData.age)
+        if (isNaN(age)) {
+          errors.age = 'Age must be a valid number'
+        } else if (age < 0) {
+          errors.age = 'Age must be a positive number'
+        } else if (age < 1) {
+          errors.age = 'Age must be at least 1'
+        } else if (age > 150) {
+          errors.age = 'Age must not exceed 150'
+        } else if (!Number.isInteger(age)) {
+          errors.age = 'Age must be a whole number'
+        }
+      }
+      break
+      
+    case 'colour':
+      if (formData.colour && formData.colour.trim().length > 30) {
+        errors.colour = 'Colour must not exceed 30 characters'
+      }
+      break
+  }
 }
 
 async function handleSubmit() {
