@@ -8,7 +8,7 @@
           type === 'success' ? 'bg-green-500' : 'bg-red-500'
         ]"
       >
-        <!-- Icon -->
+       
         <div class="flex-shrink-0 text-white">
           <svg
             v-if="type === 'success'"
@@ -40,13 +40,12 @@
           </svg>
         </div>
 
-        <!-- Content -->
         <div class="flex-1 text-white">
           <div class="font-semibold text-sm mb-1">{{ title }}</div>
           <div class="text-sm opacity-90">{{ message }}</div>
         </div>
 
-        <!-- Close Button -->
+
         <button
           @click="$emit('close')"
           class="flex-shrink-0 text-white hover:opacity-70 transition-opacity"

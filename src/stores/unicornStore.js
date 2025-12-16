@@ -9,8 +9,8 @@ export const useUnicornStore = defineStore('unicorn', () => {
   const error = ref(null)
   const currentPage = ref(1)
   const itemsPerPage = ref(5)
-  const sortField = ref(null) // 'name' or 'age'
-  const sortOrder = ref('asc') // 'asc' or 'desc'
+  const sortField = ref(null) 
+  const sortOrder = ref('asc') 
 
   // Computed
   const sortedUnicorns = computed(() => {
@@ -64,7 +64,7 @@ export const useUnicornStore = defineStore('unicorn', () => {
       return
     }
     
-    // Ensure data is an array and properly parsed
+    
     unicorns.value = Array.isArray(result.data) ? result.data : []
     loading.value = false
   }
@@ -81,7 +81,7 @@ export const useUnicornStore = defineStore('unicorn', () => {
       return false
     }
     
-    await fetchUnicorns() // Refresh list
+    await fetchUnicorns() 
     loading.value = false
     return true
   }
@@ -98,7 +98,7 @@ export const useUnicornStore = defineStore('unicorn', () => {
       return false
     }
     
-    await fetchUnicorns() // Refresh list
+    await fetchUnicorns()
     loading.value = false
     return true
   }
@@ -115,7 +115,7 @@ export const useUnicornStore = defineStore('unicorn', () => {
       return false
     }
     
-    await fetchUnicorns() // Refresh list
+    await fetchUnicorns() 
     loading.value = false
     return true
   }
@@ -139,7 +139,6 @@ export const useUnicornStore = defineStore('unicorn', () => {
   }
 
   return {
-    // State
     unicorns,
     loading,
     error,
@@ -147,11 +146,9 @@ export const useUnicornStore = defineStore('unicorn', () => {
     itemsPerPage,
     sortField,
     sortOrder,
-    // Computed
     sortedUnicorns,
     paginatedUnicorns,
     totalPages,
-    // Actions
     fetchUnicorns,
     addUnicorn,
     editUnicorn,

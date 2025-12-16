@@ -56,7 +56,7 @@ const handleSort = (field) => {
 }
 
 const clearSort = () => {
-  // Reset sort by setting to null
+
   store.setSort(null)
 }
 </script>

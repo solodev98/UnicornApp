@@ -1,8 +1,4 @@
-/**
- * Determines the status of a unicorn based on its age
- * @param {number} age - The age of the unicorn
- * @returns {string} Status label
- */
+
 export function getUnicornStatus(age) {
   if (age >= 0 && age <= 8) {
     return 'Baby Unicorn'
@@ -14,11 +10,6 @@ export function getUnicornStatus(age) {
   return 'Unknown'
 }
 
-/**
- * Gets the color class for status badge (matching Figma design)
- * @param {string} status - The status string
- * @returns {string} Tailwind color class
- */
 export function getStatusColor(status) {
   const colorMap = {
     'Baby Unicorn': 'bg-yellow-100 text-yellow-700', // Light yellow with dark yellow/orange text
@@ -28,11 +19,6 @@ export function getStatusColor(status) {
   return colorMap[status] || 'bg-gray-100 text-gray-800'
 }
 
-/**
- * Gets the emoji for status badge
- * @param {string} status - The status string
- * @returns {string} Emoji
- */
 export function getStatusEmoji(status) {
   const emojiMap = {
     'Baby Unicorn': '👶',

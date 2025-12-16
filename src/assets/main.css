@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Set DM Sans as default font */
 body {
   font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }

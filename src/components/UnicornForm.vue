@@ -1,6 +1,6 @@
 <template>
   <div class="p-6">
-    <!-- Modal Header -->
+   
     <div class="flex items-center justify-between mb-6">
       <h2 class="text-2xl font-bold text-gray-800">
         {{ isEditing ? 'Edit Unicorn' : 'Create New Unicorn' }}
@@ -115,19 +115,19 @@ const errors = reactive({
   colour: ''
 })
 
-// Populate form when editing
+
 watch(() => props.unicorn, (newUnicorn) => {
   if (newUnicorn) {
     formData.name = newUnicorn.name || ''
     formData.age = newUnicorn.age || null
     formData.colour = newUnicorn.colour || ''
   } else {
-    // Reset form
+  
     formData.name = ''
     formData.age = null
     formData.colour = ''
   }
-  // Clear errors
+
   errors.name = ''
   errors.age = ''
   errors.colour = ''
@@ -139,8 +139,7 @@ function validateForm() {
   errors.colour = ''
   
   let isValid = true
-  
-  // Name validation
+ 
   if (!formData.name || formData.name.trim() === '') {
     errors.name = 'Name is required'
     isValid = false
@@ -155,7 +154,7 @@ function validateForm() {
     }
   }
   
-  // Age validation
+
   if (formData.age === null || formData.age === undefined) {
     errors.age = 'Age is required'
     isValid = false
@@ -179,7 +178,6 @@ function validateForm() {
     }
   }
   
-  // Colour validation (optional field, but validate length if provided)
   if (formData.colour && formData.colour.trim().length > 30) {
     errors.colour = 'Colour must not exceed 30 characters'
     isValid = false
@@ -189,7 +187,7 @@ function validateForm() {
 }
 
 function validateField(fieldName) {
-  // Clear the error for this field first
+
   errors[fieldName] = ''
   
   switch (fieldName) {
@@ -244,7 +242,7 @@ async function handleSubmit() {
   
   if (success) {
     emit('success', { ...formData })
-    // Reset form
+   
     formData.name = ''
     formData.age = null
     formData.colour = ''

@@ -11,13 +11,12 @@ export function useToast() {
       message
     }
 
-    // Auto dismiss after duration
     setTimeout(() => {
       if (toast.value) {
         toast.value.show = false
         setTimeout(() => {
           toast.value = null
-        }, 300) // Wait for animation to complete
+        }, 300)
       }
     }, duration)
   }

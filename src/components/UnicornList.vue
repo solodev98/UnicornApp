@@ -9,12 +9,18 @@
       <p>Error: {{ error }}</p>
     </div>
 
-    <div v-else-if="paginatedUnicorns.length === 0" class="text-center py-8">
-      <p class="text-gray-600 text-lg">No unicorns found. Create your first one!</p>
+    <div v-else-if="paginatedUnicorns.length === 0" class="text-center py-12 px-4">
+      <div class="flex flex-col items-center justify-center max-w-md mx-auto">
+        <div class="mb-6">
+          <EmptyStateIcon :size="120" />
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">No Unicorns Found</h3>
+        <p class="text-gray-600 mb-6">There are no unicorns in the database. Create your first one to get started!</p>
+      </div>
     </div>
 
     <div v-else>
-      <!-- Table Rows -->
+   
       <div>
         <UnicornRow
           v-for="(unicorn, index) in paginatedUnicorns"
@@ -40,6 +46,7 @@
 import { computed } from 'vue'
 import UnicornRow from './UnicornRow.vue'
 import Pagination from './Pagination.vue'
+import EmptyStateIcon from './icons/EmptyStateIcon.vue'
 import { useUnicornStore } from '../stores/unicornStore'
 
 const store = useUnicornStore()

@@ -14,9 +14,7 @@
             class="lg:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
             aria-label="Open menu"
           >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+            <MenuIcon :size="24" />
           </button>
           
           <h1 class="font-bold text-xl sm:text-2xl lg:text-[32px] color: #4d5959 ml-2 lg:ml-0">Welcome John Doe</h1>
@@ -24,9 +22,7 @@
             @click="showForm = true; editingUnicorn = null"
             class="bg-purple-600 hover:bg-purple-700 text-white px-3 sm:px-6 py-2 rounded-md transition-colors flex items-center gap-2 text-sm sm:text-base"
           >
-            <svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M17.4808 8.16346C18.3889 8.16346 19.125 7.42731 19.125 6.51923C19.125 5.61115 18.3889 4.875 17.4808 4.875C16.5727 4.875 15.8365 5.61115 15.8365 6.51923M17.4808 8.16346C16.5727 8.16346 15.8365 7.42731 15.8365 6.51923M17.4808 8.16346V15.8365M15.8365 6.51923H8.16346M15.8365 17.4808C15.8365 18.3889 16.5727 19.125 17.4808 19.125C18.3889 19.125 19.125 18.3889 19.125 17.4808C19.125 16.5727 18.3889 15.8365 17.4808 15.8365M15.8365 17.4808C15.8365 16.5727 16.5727 15.8365 17.4808 15.8365M15.8365 17.4808H8.16346M8.16346 6.51923C8.16346 7.42731 7.42731 8.16346 6.51923 8.16346M8.16346 6.51923C8.16346 5.61115 7.42731 4.875 6.51923 4.875C5.61115 4.875 4.875 5.61115 4.875 6.51923C4.875 7.42731 5.61115 8.16346 6.51923 8.16346M6.51923 8.16346V15.8365M8.16346 17.4808C8.16346 18.3889 7.42731 19.125 6.51923 19.125C5.61115 19.125 4.875 18.3889 4.875 17.4808C4.875 16.5727 5.61115 15.8365 6.51923 15.8365M8.16346 17.4808C8.16346 16.5727 7.42731 15.8365 6.51923 15.8365" stroke="white" stroke-linecap="round"/>
-            </svg>
+            <PlusIcon :size="20" class="w-4 h-4 sm:w-5 sm:h-5" stroke="white" />
             <span class="hidden sm:inline">Create Unicorn</span>
             <span class="sm:hidden">Create</span>
           </button>
@@ -52,6 +48,14 @@
       />
     </Modal>
 
+    <!-- Delete Confirmation Modal -->
+    <DeleteConfirmation
+      :show="showDeleteConfirmation"
+      :unicorn-name="deletingUnicorn?.name || ''"
+      @confirm="confirmDelete"
+      @cancel="cancelDelete"
+    />
+
     <!-- Toast Notification -->
     <Toast
       v-if="toast"
@@ -74,12 +78,17 @@ import UnicornList from './components/UnicornList.vue'
 import SortControls from './components/SortControls.vue'
 import Modal from './components/Modal.vue'
 import Toast from './components/Toast.vue'
+import DeleteConfirmation from './components/DeleteConfirmation.vue'
+import MenuIcon from './components/icons/MenuIcon.vue'
+import PlusIcon from './components/icons/PlusIcon.vue'
 
 const store = useUnicornStore()
 const { toast, showToast, hideToast } = useToast()
 const showForm = ref(false)
 const editingUnicorn = ref(null)
 const sidebarOpen = ref(false)
+const showDeleteConfirmation = ref(false)
+const deletingUnicorn = ref(null)
 
 onMounted(() => {
   store.fetchUnicorns()
@@ -90,14 +99,25 @@ function handleEdit(unicorn) {
   showForm.value = true
 }
 
-async function handleDelete(unicorn) {
-  const unicornName = unicorn.name
-  if (confirm('Are you sure you want to delete this unicorn?')) {
-    const success = await store.removeUnicorn(unicorn._id)
+function handleDelete(unicorn) {
+  deletingUnicorn.value = unicorn
+  showDeleteConfirmation.value = true
+}
+
+async function confirmDelete() {
+  if (deletingUnicorn.value) {
+    const unicornName = deletingUnicorn.value.name
+    const success = await store.removeUnicorn(deletingUnicorn.value._id)
     if (success) {
       showToast('error', 'Unicorn deleted', `"${unicornName}" deleted from the database`)
     }
+    cancelDelete()
   }
+}
+
+function cancelDelete() {
+  showDeleteConfirmation.value = false
+  deletingUnicorn.value = null
 }
 
 function handleFormSuccess(unicornData) {

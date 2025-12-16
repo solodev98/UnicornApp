@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center items-center gap-2 mt-8">
-    <!-- Previous Button -->
+  
     <button
       @click="$emit('page-change', currentPage - 1)"
       :disabled="currentPage === 1"
@@ -10,8 +10,7 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
       </svg>
     </button>
-    
-    <!-- Page Numbers -->
+  
     <div class="flex items-center gap-2">
       <template v-for="(page, index) in pageNumbers" :key="index">
         <button
@@ -31,7 +30,7 @@
       </template>
     </div>
     
-    <!-- Next Button -->
+
     <button
       @click="$emit('page-change', currentPage + 1)"
       :disabled="currentPage === totalPages"
@@ -66,16 +65,16 @@ const pageNumbers = computed(() => {
   const current = props.currentPage
   
   if (total <= 7) {
-    // Show all pages if 7 or fewer
+  
     for (let i = 1; i <= total; i++) {
       pages.push(i)
     }
   } else {
-    // Always show first page
+    
     pages.push(1)
     
     if (current <= 4) {
-      // Show pages 1-5 and last page
+     
       for (let i = 2; i <= 5; i++) {
         pages.push(i)
       }
@@ -84,13 +83,13 @@ const pageNumbers = computed(() => {
         pages.push(total)
       }
     } else if (current >= total - 3) {
-      // Show first page, ellipsis, and last 5 pages
+      
       pages.push('...')
       for (let i = total - 4; i <= total; i++) {
         pages.push(i)
       }
     } else {
-      // Show first page, ellipsis, current-1, current, current+1, ellipsis, last page
+      
       pages.push('...')
       pages.push(current - 1)
       pages.push(current)

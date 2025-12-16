@@ -1,12 +1,9 @@
 import axios from 'axios'
 
-// Extract unique ID from environment variable
+// Get unique ID from environment variable
 const fullUrl = import.meta.env.VITE_API_BASE_URL || 'https://crudcrud.com/api/YOUR_UNIQUE_ID_HERE'
 const uniqueId = fullUrl.includes('/api/') ? fullUrl.split('/api/')[1] : 'YOUR_UNIQUE_ID_HERE'
 
-// Use proxy in both development and production to avoid CORS issues
-// Vite proxy handles it in dev, Vercel rewrites handle it in production
-// The proxy/rewrite will forward /api/* requests to https://crudcrud.com/api/*
 const API_BASE_URL = `/api/${uniqueId}`
 
 const api = axios.create({
@@ -15,18 +12,13 @@ const api = axios.create({
     'Content-Type': 'application/json',
     'Accept': 'application/json'
   },
-  // Axios automatically parses JSON responses, but we ensure it's explicit
   responseType: 'json'
 })
 
-/**
- * Get all unicorns
- * @returns {Promise} Axios response
- */
+//get function
 export async function getUnicorns() {
   try {
     const response = await api.get('/unicorns')
-    // Ensure response is parsed as JSON (Axios does this automatically, but verify)
     const data = typeof response.data === 'string' ? JSON.parse(response.data) : response.data
     return { data: Array.isArray(data) ? data : [], error: null }
   } catch (error) {
@@ -35,11 +27,7 @@ export async function getUnicorns() {
   }
 }
 
-/**
- * Get a single unicorn by ID
- * @param {string} id - Unicorn ID
- * @returns {Promise} Axios response
- */
+
 export async function getUnicorn(id) {
   try {
     const response = await api.get(`/unicorns/${id}`)
@@ -51,11 +39,7 @@ export async function getUnicorn(id) {
   }
 }
 
-/**
- * Create a new unicorn
- * @param {Object} unicorn - Unicorn data
- * @returns {Promise} Axios response
- */
+//create function
 export async function createUnicorn(unicorn) {
   try {
     const response = await api.post('/unicorns', unicorn)
@@ -67,29 +51,22 @@ export async function createUnicorn(unicorn) {
   }
 }
 
-/**
- * Update an existing unicorn
- * @param {string} id - Unicorn ID
- * @param {Object} unicorn - Updated unicorn data
- * @returns {Promise} Axios response
- */
+
+//update function 
 export async function updateUnicorn(id, unicorn) {
   try {
     const response = await api.put(`/unicorns/${id}`, unicorn)
     
-    // Handle empty responses (common for PUT requests that return 200/204)
     if (!response.data || response.data === '') {
       return { data: { ...unicorn, _id: id }, error: null }
     }
     
-    // Parse response if it's a string, otherwise use as-is
     const data = typeof response.data === 'string' 
       ? (response.data.trim() ? JSON.parse(response.data) : null)
       : response.data
     
     return { data: data || { ...unicorn, _id: id }, error: null }
   } catch (error) {
-    // If it's a JSON parse error but status is 2xx, the update likely succeeded
     if (error.message.includes('JSON') && error.response?.status >= 200 && error.response?.status < 300) {
       return { data: { ...unicorn, _id: id }, error: null }
     }
@@ -99,11 +76,7 @@ export async function updateUnicorn(id, unicorn) {
   }
 }
 
-/**
- * Delete a unicorn
- * @param {string} id - Unicorn ID
- * @returns {Promise} Axios response
- */
+//delete function
 export async function deleteUnicorn(id) {
   try {
     await api.delete(`/unicorns/${id}`)
