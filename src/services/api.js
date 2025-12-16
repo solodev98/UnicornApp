@@ -13,8 +13,11 @@ const API_BASE_URL = import.meta.env.DEV
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  },
+  // Axios automatically parses JSON responses, but we ensure it's explicit
+  responseType: 'json'
 })
 
 /**
@@ -24,9 +27,12 @@ const api = axios.create({
 export async function getUnicorns() {
   try {
     const response = await api.get('/unicorns')
-    return { data: response.data, error: null }
+    // Ensure response is parsed as JSON (Axios does this automatically, but verify)
+    const data = typeof response.data === 'string' ? JSON.parse(response.data) : response.data
+    return { data: Array.isArray(data) ? data : [], error: null }
   } catch (error) {
-    return { data: null, error: error.message }
+    const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch unicorns'
+    return { data: null, error: errorMessage }
   }
 }
 
@@ -38,9 +44,11 @@ export async function getUnicorns() {
 export async function getUnicorn(id) {
   try {
     const response = await api.get(`/unicorns/${id}`)
-    return { data: response.data, error: null }
+    const data = typeof response.data === 'string' ? JSON.parse(response.data) : response.data
+    return { data: data, error: null }
   } catch (error) {
-    return { data: null, error: error.message }
+    const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch unicorn'
+    return { data: null, error: errorMessage }
   }
 }
 
@@ -52,9 +60,11 @@ export async function getUnicorn(id) {
 export async function createUnicorn(unicorn) {
   try {
     const response = await api.post('/unicorns', unicorn)
-    return { data: response.data, error: null }
+    const data = typeof response.data === 'string' ? JSON.parse(response.data) : response.data
+    return { data: data, error: null }
   } catch (error) {
-    return { data: null, error: error.message }
+    const errorMessage = error.response?.data?.message || error.message || 'Failed to create unicorn'
+    return { data: null, error: errorMessage }
   }
 }
 
@@ -67,9 +77,11 @@ export async function createUnicorn(unicorn) {
 export async function updateUnicorn(id, unicorn) {
   try {
     const response = await api.put(`/unicorns/${id}`, unicorn)
-    return { data: response.data, error: null }
+    const data = typeof response.data === 'string' ? JSON.parse(response.data) : response.data
+    return { data: data, error: null }
   } catch (error) {
-    return { data: null, error: error.message }
+    const errorMessage = error.response?.data?.message || error.message || 'Failed to update unicorn'
+    return { data: null, error: errorMessage }
   }
 }
 
@@ -83,7 +95,8 @@ export async function deleteUnicorn(id) {
     await api.delete(`/unicorns/${id}`)
     return { data: true, error: null }
   } catch (error) {
-    return { data: null, error: error.message }
+    const errorMessage = error.response?.data?.message || error.message || 'Failed to delete unicorn'
+    return { data: null, error: errorMessage }
   }
 }
 
