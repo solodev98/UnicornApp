@@ -2,20 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Almarena Light Font */
-@font-face {
-  font-family: 'Almarena Light';
-  src: url('/fonts/Almarena-Light.woff2') format('woff2'),
-       url('/fonts/Almarena-Light.woff') format('woff'),
-       url('/fonts/Almarena-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Set Almarena Light as default font */
+/* Set DM Sans as default font */
 body {
-  font-family: 'Almarena Light', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 
