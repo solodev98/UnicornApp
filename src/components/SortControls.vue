@@ -1,11 +1,11 @@
 <template>
-  <div class="mb-6 flex flex-wrap gap-4 items-center">
-    <span class="text-gray-700 font-medium">Sort by:</span>
+  <div class="mb-4 sm:mb-6 flex flex-wrap gap-2 sm:gap-4 items-center">
+    <span class="text-gray-700 font-medium text-sm sm:text-base">Sort by:</span>
     
     <button
       @click="handleSort('name')"
       :class="[
-        'px-4 py-2 rounded-md transition-colors flex items-center gap-2',
+        'px-3 sm:px-4 py-1.5 sm:py-2 rounded-md transition-colors flex items-center gap-2 text-sm',
         sortField === 'name'
           ? 'bg-blue-500 text-white'
           : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
@@ -20,7 +20,7 @@
     <button
       @click="handleSort('age')"
       :class="[
-        'px-4 py-2 rounded-md transition-colors flex items-center gap-2',
+        'px-3 sm:px-4 py-1.5 sm:py-2 rounded-md transition-colors flex items-center gap-2 text-sm',
         sortField === 'age'
           ? 'bg-blue-500 text-white'
           : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
@@ -35,7 +35,7 @@
     <button
       v-if="sortField"
       @click="clearSort"
-      class="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
+      class="px-3 sm:px-4 py-1.5 sm:py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors text-sm"
     >
       Clear Sort
     </button>

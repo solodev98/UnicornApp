@@ -65,20 +65,20 @@
         <p v-if="errors.colour" class="mt-1 text-sm text-red-600">{{ errors.colour }}</p>
       </div>
 
-      <div class="flex gap-4 pt-4">
-        <button
-          type="submit"
-          :disabled="loading"
-          class="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-md transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
-        >
-          {{ loading ? 'Saving...' : (isEditing ? 'Update' : 'Create') }}
-        </button>
+      <div class="flex justify-end gap-4 pt-4">
         <button
           type="button"
           @click="$emit('cancel')"
-          class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-2 rounded-md transition-colors"
+          class="bg-white border border-black text-gray-900 px-6 py-2 rounded-md transition-colors hover:bg-gray-50"
         >
           Cancel
+        </button>
+        <button
+          type="submit"
+          :disabled="loading"
+          class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-md transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+        >
+          {{ loading ? 'Saving...' : (isEditing ? 'Update' : 'Create') }}
         </button>
       </div>
     </form>

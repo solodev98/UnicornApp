@@ -4,47 +4,96 @@
     <div :class="['absolute left-0 top-0 bottom-0 w-1.5', borderColorClass]"></div>
     
     <!-- Main Row -->
-    <div class="py-6 px-4 pl-6">
-      <!-- Labels Row - Left aligned with proper spacing -->
-      <div class="flex items-center mb-2">
-        <div class="w-12 text-gray-400 text-xs">No</div>
-        <div class="w-40 text-gray-400 text-xs">Doctor Name</div>
-        <div class="w-20 text-gray-400 text-xs">Age</div>
-        <div class="w-24 text-gray-400 text-xs">Color</div>
-        <div class="w-32 text-gray-400 text-xs">Status</div>
-      </div>
-      
-      <!-- Values Row - Left aligned with matching spacing -->
-      <div class="flex items-center">
-        <div class="w-12 text-gray-600 text-sm">{{ index + 1 }}</div>
-        <div class="w-40 font-bold text-gray-900 text-sm">{{ unicorn.name }}</div>
-        <div class="w-20 font-bold text-gray-900 text-sm">{{ unicorn.age }}</div>
-        <div class="w-24 font-bold text-gray-900 text-sm capitalize">{{ unicorn.colour || 'N/A' }}</div>
-        <div class="w-32 flex items-center">
-          <span :class="['px-3 py-1 rounded-full text-xs font-medium inline-flex items-center gap-1.5 whitespace-nowrap', statusColor]">
-            <span>{{ statusEmoji }}</span>
-            {{ status }}
-          </span>
+    <div class="py-4 sm:py-6 px-3 sm:px-4 pl-5 sm:pl-6">
+      <!-- Desktop View -->
+      <div class="hidden md:block">
+        <!-- Labels Row - Left aligned with proper spacing -->
+        <div class="flex items-center mb-2">
+          <div class="w-12 text-gray-400 text-xs">No</div>
+          <div class="w-40 text-gray-400 text-xs">Doctor Name</div>
+          <div class="w-20 text-gray-400 text-xs">Age</div>
+          <div class="w-24 text-gray-400 text-xs">Color</div>
+          <div class="w-32 text-gray-400 text-xs">Status</div>
         </div>
         
-        <!-- Actions - Right aligned -->
-        <div class="ml-auto flex items-center gap-2">
-          <button
-            @click="$emit('edit', unicorn)"
-            class="px-4 py-2 bg-white border border-black text-gray-900 text-sm rounded-[12px] hover:bg-gray-50 transition-colors font-medium"
-            style="border-width: 1px;"
-          >
-            Edit
-          </button>
-          <button
-            @click="$emit('delete', unicorn)"
-            class="w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded flex items-center justify-center transition-colors"
-            title="Delete"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-            </svg>
-          </button>
+        <!-- Values Row - Left aligned with matching spacing -->
+        <div class="flex items-center">
+          <div class="w-12 text-gray-600 text-sm">{{ index + 1 }}</div>
+          <div class="w-40 font-bold text-gray-900 text-sm">{{ unicorn.name }}</div>
+          <div class="w-20 font-bold text-gray-900 text-sm">{{ unicorn.age }}</div>
+          <div class="w-24 font-bold text-gray-900 text-sm capitalize">{{ unicorn.colour || 'N/A' }}</div>
+          <div class="w-32 flex items-center">
+            <span :class="['px-3 py-1 rounded-full text-xs font-medium inline-flex items-center gap-1.5 whitespace-nowrap', statusColor]">
+              <span>{{ statusEmoji }}</span>
+              {{ status }}
+            </span>
+          </div>
+          
+          <!-- Actions - Right aligned -->
+          <div class="ml-auto flex items-center gap-2">
+            <button
+              @click="$emit('edit', unicorn)"
+              class="px-4 py-2 bg-white border border-black text-gray-900 text-sm rounded-[12px] hover:bg-gray-50 transition-colors font-medium"
+              style="border-width: 1px;"
+            >
+              Edit
+            </button>
+            <button
+              @click="$emit('delete', unicorn)"
+              class="w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded flex items-center justify-center transition-colors"
+              title="Delete"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile View -->
+      <div class="md:hidden">
+        <div class="flex items-start justify-between mb-3">
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-gray-400 text-xs">#{{ index + 1 }}</span>
+              <h3 class="font-bold text-gray-900 text-base">{{ unicorn.name }}</h3>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 text-sm">
+              <div class="flex items-center gap-1">
+                <span class="text-gray-400">Age:</span>
+                <span class="font-semibold text-gray-900">{{ unicorn.age }}</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <span class="text-gray-400">Color:</span>
+                <span class="font-semibold text-gray-900 capitalize">{{ unicorn.colour || 'N/A' }}</span>
+              </div>
+            </div>
+            <div class="mt-2">
+              <span :class="['px-3 py-1 rounded-full text-xs font-medium inline-flex items-center gap-1.5', statusColor]">
+                <span>{{ statusEmoji }}</span>
+                {{ status }}
+              </span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 ml-2">
+            <button
+              @click="$emit('edit', unicorn)"
+              class="px-3 py-1.5 bg-white border border-black text-gray-900 text-xs rounded-lg hover:bg-gray-50 transition-colors font-medium"
+              style="border-width: 1px;"
+            >
+              Edit
+            </button>
+            <button
+              @click="$emit('delete', unicorn)"
+              class="w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded flex items-center justify-center transition-colors"
+              title="Delete"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
       
@@ -88,8 +137,8 @@
         </div>
         <!-- Text content - Center aligned -->
         <div class="text-center">
-          <p class="text-sm mb-1" style="color: #4e46b4;">The body copy explains the empty state.</p>
-          <p class="text-sm" style="color: #4e46b4;">The icon relates to the situation.</p>
+          <p class="text-sm mb-1" style="color: #928AFF;">The body copy explains the empty state.</p>
+          <p class="text-sm" style="color: #928AFF;">The icon relates to the situation.</p>
         </div>
       </div>
     </div>
